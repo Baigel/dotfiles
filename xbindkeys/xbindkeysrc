@@ -1,0 +1,146 @@
+###########################
+# xbindkeys configuration #
+###########################
+
+# ################# KEYPAD SHORTCUTS #################
+
+# KP_Insert (Alt-Tab)
+#"bash ~/Ahmed/Scripts/altTab.sh"
+#    KP_Insert + Release
+
+# KP_Delete (Show all Windows) CODE NOT WORKING, CURRENTLY SET IN SETTINGS
+#"bash ~/Ahmed/Scripts/showWindows.sh"
+#    KP_Delete
+
+# KP_Enter
+"if [ $(xdotool get_desktop) -eq 0 ] ; then echo 'Left Reached' ; else xdotool set_desktop --relative -- -1 ; fi"
+    KP_Enter
+
+# KP_Addition
+"if [ $(xdotool get_desktop) -eq 2 ] ; then echo 'Right Reached' ; else xdotool set_desktop --relative -- 1 ; fi"
+    KP_Add
+
+# KP_Subtract (Open Chromium)
+"chromium"
+    KP_Subtract
+
+# KP_Multiply (Open Gmail)
+"xdotool sleep 0.2 type 'ahmedhafeezbaig@gmail.com'"
+    KP_Multiply
+
+# KP_Divide (Go to First Song)
+"for i in `seq 20`; do playerctl previous; done"
+   KP_Divide
+
+# Num_1 (Previous Song)
+"playerctl previous"
+   KP_End
+
+# Num_2 (Next Song)
+"playerctl next"
+    KP_Down
+    
+# Num_3 (Screenshot)
+"flameshot gui"
+    KP_Next
+    
+# Num_4 (Play/Pause Song)
+"playerctl play-pause"
+   KP_Left
+
+# Num_5 (Next Chrome Tab)
+#"xdotool key ctrl+Tab"
+#    KP_Begin
+
+# Num_6 (Previous Chrome Tab)
+#"xdotool keydown ctrl+shift+Next"
+#    KP_Right
+
+# Num_7 ()
+#
+#    KP_Home
+
+# Num_8 ()
+#
+#    KP_Prior
+
+# Num_9 ()
+#
+#    KP_Up
+
+
+
+# ################# SIMULATING i3-LIKE SHORTCUTS #################
+
+# Alt + J (Go to right desktop)
+"if [ $(xdotool get_desktop) -eq 0 ] ; then echo 'Left Reached' ; else xdotool set_desktop --relative -- -1 ; fi"
+    Alt + j
+
+# Alt + K (Go to left desktop)
+"if [ $(xdotool get_desktop) -eq 2 ] ; then echo 'Right Reached' ; else xdotool set_desktop --relative -- 1 ; fi"
+    Alt + k
+
+# Alt + BackSpace (Delete 10 Characters)
+"for i in `seq 10`; do xdotool key --delay 3 BackSpace; done"
+    Alt + BackSpace
+
+# Mod4 + i
+#"xdotool key Down"
+#    Alt_R + i
+
+# Mod4 + k
+#"xdotool key Up"
+#    Alt_R + k
+
+# Mod4 + j
+#"xdotool key Right"
+#    Alt_R + j
+
+# Mod4 + l
+#"xdotool key Left"
+#    Alt_R + l
+
+
+
+
+# ################ XF86 SHORTCUTS #################
+
+# XF86Tools (Go to Settings Window)
+"systemsettings5"
+    XF86Tools
+
+# XF86Calculator (Go to Spotify Window)
+"xdotool search --class spotify windowactivate %2"
+    XF86Calculator
+
+# XF86Explorer (Go to Discord Window)
+"xdotool search --class discord windowactivate %4"
+    XF86Explorer
+
+# XF86Mail ()
+#
+#    XF86Mail
+
+# XF86HomePage (Tetris)
+"nestopia "~/Documents/Nes Games/tetris.nes""
+    XF86HomePage
+
+# Open Up Gmail
+"chromium --new-window mail.google.com"
+    XF86Reload
+
+
+
+# ################# OTHER SHORTCUTS #################
+
+# Pause (Sleep)
+"loginctl lock-session"
+    Pause
+
+# Scroll Lock (Hibernate)
+"systemctl suspend"
+    Scroll_Lock
+
+##################################
+# End of xbindkeys configuration #
+##################################
