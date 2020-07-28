@@ -39,8 +39,7 @@
 # Num_2 (Next Song)
 "playerctl next"
     KP_Down
-    
-# Num_3 (Screenshot)
+    # Num_3 (Screenshot)
 "flameshot gui"
     KP_Next
     
@@ -67,8 +66,6 @@
 # Num_9 ()
 #
 #    KP_Up
-
-
 
 # ################# SIMULATING i3-LIKE SHORTCUTS #################
 
@@ -139,6 +136,19 @@
 # Scroll Lock (Hibernate)
 "systemctl suspend"
     Scroll_Lock
+    
+# Desktop to the Left
+"if [ $(xdotool get_desktop) -eq 0 ] ; then echo 'Left-Most Desktop Reached'; else xdotool set_desktop --relative -- -1 ; fi"
+    Alt_R
+
+# Desktop to the Right
+"if [ $(xdotool get_desktop) -eq 2 ] ; then echo 'Right-Most Desktop Reached'; else xdotool set_desktop --relative -- 1 ; fi"
+    Control_R
+    
+# Screenshottig
+"flameshot gui"
+    m:0x5 + c:53
+    Control+Shift + x
 
 ##################################
 # End of xbindkeys configuration #
