@@ -5,18 +5,23 @@
 # Programs Installed Overview: 
 # Settings Tweaked Overview: 
 
+
 # System Update
 #pacman -Syyu --noconfirm??
+
 
 # Fix Key issues
 gpg --keyserver hkp://keys.gnupg.net --recv-keys 4773BD5E130D1D45  # Used for fixing spotify (may need to change regularly idk)
 pacman-key --refresh-keys
 
+
 # Fix rofi font issue
 # Download https://gitlab.manjaro.org/profiles-and-settings/desktop-settings/blob/master/community/bspwm/skel/.config/rofi/config.rasi and place into ~/.config/rofi
 
+
 # Uninstall Unused Software
 pacman -Rsn --noconfirm bauh gimp hexchat manjaro-hello mousepad xfce-screenshooter thunderbird transmission-gtk pidgin xfburn orage audacious lxterminal zathura-djvu zathura-pdf-poppler zathura gtkhash-thunar thunar-archive-plugin thunar-media-tags-plugin thuar-shares-plugin thunar-volman thunar
+
 
 # Install Software
 # Fix up keys
@@ -36,12 +41,19 @@ for i in "${AURPrograms[@]}"
     makepkg -si --noconfirm $i
     cd ..
     done
+cd
+rm -rf ~/aur-programs
 
-# Replace Awesome config file with config from github
+    
+# Replace config files with config files from github
+# Awesome config
+git clone
+# Autorun on start file
+git clone
+# Flameshot config file
 git clone
 
-
-
+# Finish Up
 reboot
 
 
