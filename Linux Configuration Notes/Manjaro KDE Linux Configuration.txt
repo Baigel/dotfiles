@@ -156,7 +156,7 @@ Scripts
 
 Install Manjaro on Dell Laptop
      - Wipe the disk from the bios settings
-     - Reset the bios and change the following settings:
+     - Reset the bios and change the following settings (under 'Maintanence'):
          - General/Boot Sequence: UEFI
          - General/Advanced Boot Options: Deselect Enable Legacy Option ROMs
          - General/UEFI Boot path Security: Never
@@ -165,6 +165,7 @@ Install Manjaro on Dell Laptop
          - Secure Boot/Secure Boot Mode: Audit Mode
      - Boot to the manjaro installer and continue as normal
 
+     
 Issues and Fixes:
 	 - Wifi is not connecting: restart wifi card by flipping the switch on the side of the computer (off then on)
 	 - Signature error when installing packages (PGP signature): "sudo pacman-key --refresh-keys" OR "pacman -Sy archlinux-keyring && pacman -Su" OR "sudo hwclock -w"
