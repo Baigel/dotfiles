@@ -5,9 +5,9 @@ xmodmap -e "keycode 108 = Return"
 
 # Easier Navigation
 #xmodmap -e "keycode 37 = Mode_switch"
-#xmodmap -e "keysym j = j J Left"
+xmodmap -e "keysym j = j J Left"
 #keysym k = k K Down
-xmodmap -e "keysym l = l L Up"
+#keysym l = l L Up
 #keysym ; = ; : Right
 #keysym u = u U Prior
 #keysym i = i I Home

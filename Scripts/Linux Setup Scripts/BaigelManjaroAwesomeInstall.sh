@@ -1,6 +1,6 @@
 #!/bin/bash
 
-# *************** BAIGEL's MANJARO BSPWM INSTALL ***************
+# *************** BAIGEL's MANJARO AWESOME INSTALL ***************
 # Run system update before executing this script.
 # Programs Installed Overview: 
 # Settings Tweaked Overview: 
@@ -10,7 +10,7 @@
 #pacman -Syyu --noconfirm??
 
 
-# Fix Key issues
+# Fix Pacman Key issues
 gpg --keyserver hkp://keys.gnupg.net --recv-keys 4773BD5E130D1D45  # Used for fixing spotify (may need to change regularly idk)
 pacman-key --refresh-keys
 
@@ -29,7 +29,7 @@ sudo pacman-key --refresh-keys
 sudo pacman -Sy --noconfirm archlinux-keyring && sudo pacman -Su --noconfirm
 sudo hwclock -w
 # Software from Official Arch Repository
-pacman -S --noconfirm chromium kate discord dictd steam xorg-xev manjaro-pulse playerctl xdotool dolphin konsole
+pacman -S --noconfirm chromium kate ranger discord dictd steam xorg-xev manjaro-pulse playerctl xdotool dolphin konsole exa screenfetch emacs gimp
 # Software AUR Programs
 AURPrograms=( yay spotify spotify-adblock-git flameshot-git github-desktop-git scrcpy google-keep-nativefier )
 mkdir aur-programs
@@ -44,7 +44,7 @@ for i in "${AURPrograms[@]}"
 cd
 rm -rf ~/aur-programs
 
-    
+
 # Replace config files with config files from github
 # Awesome config
 git clone
