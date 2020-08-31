@@ -29,7 +29,7 @@ sudo pacman-key --refresh-keys
 sudo pacman -Sy --noconfirm archlinux-keyring && sudo pacman -Su --noconfirm
 sudo hwclock -w
 # Software from Official Arch Repository
-pacman -S --noconfirm chromium kate ranger discord dictd steam xorg-xev manjaro-pulse playerctl xdotool dolphin konsole exa screenfetch emacs gimp
+pacman -S --noconfirm chromium kate ranger discord dictd steam xorg-xev manjaro-pulse playerctl xdotool dolphin konsole exa screenfetch emacs gimp feh
 # Software AUR Programs
 AURPrograms=( yay spotify spotify-adblock-git flameshot-git github-desktop-git scrcpy google-keep-nativefier )
 mkdir aur-programs
@@ -43,6 +43,10 @@ for i in "${AURPrograms[@]}"
     done
 cd
 rm -rf ~/aur-programs
+
+# Set Wallpaper
+git clone 
+feh --bg-scale ~/.wallpaper
 
 
 # Replace config files with config files from github
