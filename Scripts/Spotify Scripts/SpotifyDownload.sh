@@ -2,18 +2,12 @@
 echo "Using Master Account Playlists"
 cd
 cd ~/OneDrive/Music/Baigels_Tunes
-spotdl -f ~/OneDrive/Music/Baigels_Tunes -p https://open.spotify.com/playlist/4rru4z2JcnQXI8CpbFT00j?si=t-liaCq1RFi68k-zawH-Ww
-spotdl -f ~/OneDrive/Music/Baigels_Tunes --overwrite skip -l baigels_tunes.txt
+rm baigels_tunes.txt
+spotdl -f ~/OneDrive/Music/Baigels_Tunes -p https://open.spotify.com/playlist/4rru4z2JcnQXI8CpbFT00j?si=XnKh-IYiSk20vPK_udz8RQ # Get playlist and pass into baigels_tunes.txt
+touch downloadedSongs.txt # In case it does not exist
+diff -e downloadedSongs.txt baigels_tunes.txt | grep "https" > newSongLinks.txt # Get new songs
+cat newSongLinks.txt >> downloadedSongs.txt # Keep a record of all songs in downloadedSongs.txt
+spotdl -f ~/OneDrive/Music/Baigels_Tunes --overwrite skip -l newSongLinks.txt # Download songs
+rm newSongLinks.txt
 cd
-cd ~/OneDrive/Music/Old_School_Goodies
-spotdl -f ~/OneDrive/Music/Old_School_Goodies -p https://open.spotify.com/playlist/1yRCUzdzPxtDFPotpt9EBb?si=ePtEq6z-Sxa1hpzzU2gwDw
-spotdl -f ~/OneDrive/Music/Old_School_Goodies --overwrite skip -l old-school-goodies.txt
-cd
-cd ~/OneDrive/Music/2000s
-spotdl -f ~/OneDrive/Music/2000s -p https://open.spotify.com/playlist/02xlb0sEJBjOrydLU7N1NC?si=NQ4-4w67Rj2opGt0rlbGXw
-spotdl -f ~/OneDrive/Music/2000s --overwrite skip -l 2000s.txt
-onedrive
-rm ~/20162
-rm ~/20171
-rm ~/20172
-rm ~/20181
+onedrive --synchronize

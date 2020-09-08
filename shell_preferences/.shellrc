@@ -1,8 +1,10 @@
 # Tcl Script for all bash/zsh preferences
 # How to use: add 'source .shell_pref' to .profile or .zprofike
 
+
 ######### START MESSAGE ##########
 echo "~/.shellrc sourced"
+
 
 ########## ALIAS ##########
 # power management
@@ -27,6 +29,10 @@ alias push='git push origin'
 alias status='git status'
 alias tag='git tag'
 alias newtag='git tag -a'
+# highly used terminal tools
+alias f="ranger"
+alias l="ls"
+alias m="man"
 # pacman and yay
 alias pacsyu='sudo pacman -Syyu'                 # update only standard pkgs
 alias yaysua="yay -Sua --noconfirm"              # update only AUR pkgs
