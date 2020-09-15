@@ -1,8 +1,0 @@
-#/usr/bin/xmodmap
-keycode 66 = Mode_switch
-keysym j = j J Left
-keysym k = k K Down
-keysym l = l L Up
-keysym 0x3b = 0x3b 0x3a Right
-keysym 0x20 = 0x20 0x20 Return
-keysym m = m M BackSpace
