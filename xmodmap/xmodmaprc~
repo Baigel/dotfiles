@@ -1,16 +1,8 @@
-# Useful Remaps
-xmodmap -e "keycode 133 = Alt_L"
-xmodmap -e "keycode 64 = Super_L" 
-xmodmap -e "keycode 108 = Return"
-
-# Easier Navigation
-#xmodmap -e "keycode 37 = Mode_switch"
-xmodmap -e "keysym j = j J Left"
-#keysym k = k K Down
-#keysym l = l L Up
-#keysym ; = ; : Right
-#keysym u = u U Prior
-#keysym i = i I Home
-#keysym o = o O End
-#keysym p = p P Next
-
+#/usr/bin/xmodmap
+keycode 66 = Mode_switch
+keysym j = j J Left
+keysym k = k K Down
+keysym l = l L Up
+keysym 0x3b = 0x3b 0x3a Right
+keysym 0x20 = 0x20 0x20 Return
+keysym m = m M BackSpace
