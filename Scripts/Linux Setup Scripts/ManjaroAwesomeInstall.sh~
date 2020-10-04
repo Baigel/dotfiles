@@ -32,7 +32,7 @@ sudo hwclock -w
 pacman -S --noconfirm chromium kate ranger discord dictd steam xorg-xev manjaro-pulse playerctl xdotool dolphin konsole exa 
 screenfetch emacs gimp feh texlive-core texlive-latexextra texlive-science pdftk
 # Software AUR Programs
-AURPrograms=( yay spotify spotify-adblock-git flameshot-git github-desktop-git scrcpy google-keep-nativefier tllocalmgr-git )
+AURPrograms=( yay spotify spotify-adblock-git flameshot-git github-desktop-git scrcpy google-keep-nativefier )
 mkdir aur-programs
 cd aur-programs
 for i in "${AURPrograms[@]}"
