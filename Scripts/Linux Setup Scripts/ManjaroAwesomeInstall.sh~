@@ -24,12 +24,18 @@ pacman -Rsn --noconfirm bauh gimp hexchat manjaro-hello mousepad xfce-screenshoo
 
 
 # Install Software
+# List all installs
+IDEs="visual-studio-code-bin atom"
+TERMINAL="konsole exa ranger dictd xorg-xev playerctl xdotool screenfetch feh"
+LATEX="texlive-core texlive-latexextra texlive-science pdftk"
+OTHER="discord steam dolphin"
+TOOLS="manjaro-pulse"
 # Fix up keys
 sudo pacman-key --refresh-keys
 sudo pacman -Sy --noconfirm archlinux-keyring && sudo pacman -Su --noconfirm
 sudo hwclock -w
 # Software from Official Arch Repository
-pacman -S --noconfirm visual-studio-code-bin atom ranger discord dictd steam xorg-xev manjaro-pulse playerctl xdotool dolphin konsole exa screenfetch emacs gimp feh texlive-core texlive-latexextra texlive-science pdftk
+pacman -S --noconfirm $IDES $TERMINAL $LATEX $OTHER
 # Software AUR Programs
 AURPrograms=( yay spotify spotify-adblock-git flameshot-git github-desktop-git scrcpy google-keep-nativefier tllocalmgr-git )
 mkdir aur-programs
@@ -45,7 +51,8 @@ cd
 rm -rf ~/aur-programs
 
 # Set Wallpaper
-git clone 
+git clone
+# Need to make the following wallpaper change permanent
 feh --bg-scale ~/.wallpaper
 
 
