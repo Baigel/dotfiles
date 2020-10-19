@@ -50,6 +50,8 @@ for i in "${AURPrograms[@]}"
     done
 cd
 rm -rf ~/aur-programs
+# Install Doom Emacs
+git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
 
 # Set Wallpaper
 git clone

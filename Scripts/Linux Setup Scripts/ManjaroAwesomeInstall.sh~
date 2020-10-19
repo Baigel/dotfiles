@@ -2,8 +2,9 @@
 
 # *************** BAIGEL's MANJARO AWESOME INSTALL ***************
 # Run system update before executing this script.
-# Programs Installed Overview: 
-# Settings Tweaked Overview: 
+
+# Current Issues
+# - Code is incredible specific (to manjaro awesome), a better script would be more generalized to work with, say, any version of manjaro, or conver a blank slate (like arch) into a fully custom syste)
 
 
 # System Update
