@@ -1,4 +1,4 @@
-  // Made By Mohammud Ahmed Hafeez-Baig
+  // Made By Baigel
 
 Still Need to Fix:
 	 - Please find a better way to disable numlock (see macros section)
