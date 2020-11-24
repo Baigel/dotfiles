@@ -35,7 +35,7 @@ exec 1> >(tee "stdout.log")
 exec 2> >(tee "stderr.log")
 
 
-# Fix Date and Time
+# Update system clock
 echo 'Update system clock'
 timedatectl set-ntp true
 
@@ -62,9 +62,25 @@ echo 'Mounting filesystem'
 mount "$boot_dev" /mnt/boot
 swapon "$swap_dev"
 
+# Find the boot/swap/root partitions using a glob and then wipe the filesystems
+part_boot="$(ls ${device}* | grep -E "^${device}p?1$")"
+part_swap="$(ls ${device}* | grep -E "^${device}p?2$")"
+part_root="$(ls ${device}* | grep -E "^${device}p?3$")"
+wipefs "${part_boot}"
+wipefs "${part_swap}"
+wipefs "${part_root}"
+
+# Write the partitions and mount
+mkfs.vfat -F32 "${part_boot}"
+mkswap "${part_swap}"
+mkfs.f2fs -f "${part_root}"
+swapon "${part_swap}"
+mount "${part_root}" /mnt
+mkdir /mnt/boot
+mount "${part_boot}" /mnt/boot
 
 # Install important packages using pacstrap
-#echo ' --- Installing Base --- '
+echo ' --- Installing Base --- '
 pacstrap /mnt base linux linux-firmware
 
 
