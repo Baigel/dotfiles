@@ -8,6 +8,8 @@
 # Desktop Environment:	KDE(?)
 # Window Manager:	Spectrwm
 
+set -ex
+
 # Prompt user with inital warning
 echo 'WARNING: THIS SCRIPT WILL BLINDLY WIPE THE DISK!'
 echo 'Press Enter to continue...'
@@ -15,9 +17,14 @@ read -s
 
 # System Details
 DRIVE='/dev/sda'
-HOSTNAME="${1:?"Missing hostname"}"
 TIMEZONE='Australia/Brisbane'
 KEYMAP='us'
+
+# Get hostname and username
+echo 'Enter username'
+read USERNAME
+echo 'Enter hostname: '
+read HOSTNAME
 
 # Get Password
 echo -n "Password: "
@@ -107,30 +114,40 @@ pacstrap /mnt base linux linux-firmware
 echo ' --- Configuring the System --'
 echo 'Generating the fstab file'
 genfstab -U /mnt >> /mnt/etc/fstab
-echo 'Entering chroot'
+echo 'Entering chroot to continue install'
 arch-chroot /mnt
 echo 'Setting timezone'
 ln -sf /usr/share/zoneinfo/Australia/Brisbane /etc/localtime
 echo 'Generating /etc/adjtime'
 hwclock --systohc
 echo 'Setting localization'
-locale-gen
 echo 'en_US.UTF-8 UTF-8' >> /etc/locale.gen
 echo 'LANG=en_US.UTF-8' >> /etc/locale.conf
+locale-gen
+echo 'Set keymap'
 echo 'KEYMAP=de-latin1' >> /etc/vconsole.conf
 echo 'Setting hostname and configuring network'
 echo "$HOSTNAME" >> /etc/hostname
 echo "127.0.0.1	localhost\n::1		localhost\n127.0.1.1	$HOSTNAME.localdomain	$HOSTNAME" >> /etc/hosts
 echo 'Adding user'
-useradd -m -G wheel,users -s /bin/bash $HOSTNAME
+useradd -m -s /bin/zsh -G adm,systemd-journal,wheel,rfkill,games,network,video,audio,optical,storage,scanner,power,adbusers,wireshark "$USERNAME"
 echo 'Setting root password'
 echo -en "$PASSWORD\n$PASSWORD" | passwd
 echo 'Setting user password'
-echo -en "$PASSWORD\n$PASSWORD" | passwd $HOSTNAME
+echo -en "$PASSWORD\n$PASSWORD" | passwd $USERNAME
 echo 'Adding user as a sudoer'
-echo "$HOSTNAME ALL=(ALL) ALL" >> /etc/sudoers
+echo "$USERNAME ALL=(ALL) ALL" >> /etc/sudoers
+chmod 440 /etc/sudoers
 echo 'Enable dhcpcd'
 systemctl enable dhcpcd
+echo 'Setting up microde'
+echo 'microcode' > /etc/modules-load.d/intel-ucode.conf
+echo 'Enable systemctl services'
+systemctl enable cronie.service cpupower.service ntpd.service slim.service
+echo 'Enable systemctl wifi services'
+systemctl enable net-auto-wired.service net-auto-wireless.service
+echo 'Updating locate'
+updatedb
 
 echo ' --- Installing Bootloader (grub) --- '
 pacman -S grub os-prober
@@ -202,7 +219,6 @@ install_packages() {
 	# Install Doom Emacs
 	git clone --depth 1 https://github.com/hlissner/doom-emacs ~/.emacs.d
 	~/.emacs.d/bin/doom install
-
 }
 
 get_dot_files() {
@@ -214,6 +230,5 @@ get_dot_files() {
 	# Flameshot config file
 	#git clone
 }
-
 
 
