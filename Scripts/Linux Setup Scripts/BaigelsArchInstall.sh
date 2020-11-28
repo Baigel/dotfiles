@@ -54,6 +54,8 @@ boot_dev="$DRIVE"1
 swap_dev="$DRIVE"2
 swap_size=$(free --mebi | awk '/Mem:/ {print $2}')
 swap_end=$(( $swap_size + 129 + 1 ))MiB
+devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)
+device=$(dialog --stdout --menu "Select installation disk" 0 0 0 ${devicelist})
 parted --script "${device}" -- mklabel gpt \
   mkpart ESP fat32 1Mib 129MiB \
   set 1 boot on \
