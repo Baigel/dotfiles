@@ -10,6 +10,9 @@
 
 set -ex
 
+# Temporarily line used for debugging
+#trap read debug
+
 # Prompt user with inital warning
 echo 'WARNING: THIS SCRIPT WILL BLINDLY WIPE THE DISK!'
 echo 'Press Enter to continue...'
