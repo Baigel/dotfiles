@@ -8,7 +8,7 @@
 # Desktop Environment:	KDE(?)
 # Window Manager:	Spectrwm
 
-#set -x
+set -x
 
 # Temporarily line used for debugging
 #trap read debug
@@ -58,51 +58,45 @@ timedatectl set-ntp true
 # Setup Partitioning
 echo ' --- Setting Up Boot and Swap Partitions --- '
 echo 'Partitioning the disk'
-# https://superuser.com/a/984637
-sed -e 's/\s*\([\+0-9a-zA-Z]*\).*/\1/' << EOF | fdisk ${TGTDEV}
-  o # clear the in memory partition table
-  n # new partition
-  p # primary partition
-  1 # partition number 1
-    # default - start at beginning of disk 
-  +512M # 512 MB boot parttion
-  n # new partition
-  p # primary partition
-  2 # partion number 2
-    # default, start immediately after preceding partition
-  +8G # 8 GB swap parttion
-  n # new partition
-  p # primary partition
-  3 # partion number 3
-    # default, start immediately after preceding partition
-    # default, extend partition to end of disk
-  a # make a partition bootable
-  1 # bootable partition is partition 1 -- /dev/sda1
-  p # print the in-memory partition table
-  w # write the partition table
-  q # and we're done
-EOF
+boot_dev="$DRIVE"1
+swap_dev="$DRIVE"2
+swap_size=$(free --mebi | awk '/Mem:/ {print $2}')
+swap_end=$(( $swap_size + 129 + 1 ))MiB
+devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop" | tac)
+#device=$(dialog --stdout --menu "Select installation disk" 0 0 0 ${devicelist})
+#parted --script "${device}" -- mklabel gpt \
+# Casually assume that the drive is /dev/sda
+parted --script /dev/sda -- mklabel gpt \
+  mkpart ESP fat32 1Mib 129MiB \
+  set 1 boot on \
+  mkpart primary linux-swap 129MiB ${swap_end} \
+  mkpart primary ext4 ${swap_end} 100%
 
-# Format the partitions
-mkfs.ext4 /dev/sda3
-mkfs.fat -F32 /dev/sda1
-
-# Initate pacman keyring
-pacman-key --init
-pacman-key --populate archlinux
-pacman-key --refresh-keys
-
-# Mounting partitions
-echo 'Mounting partitions'
-mount /dev/sda3 /mnt
-mkdir -pv /mnt/boot/efi
-mount /dev/sda1 /mnt/boot/efi
-mkswap /dev/sda2
-swapon /dev/sda2
+# Format filesystem
+echo 'Formatting filesystem'
+mkfs.ext4 -L boot "$boot_dev"
+mkswap "$swap_dev"
+# Mounting filesystem
+echo 'Mounting filesystem'
+mount "$boot_dev" /mnt/boot
+swapon "$swap_dev"
 
 # Find the boot/swap/root partitions using a glob and then wipe the filesystems
+part_boot="$(ls ${device}* | grep -E "^${device}p?1$")"
+part_swap="$(ls ${device}* | grep -E "^${device}p?2$")"
+part_root="$(ls ${device}* | grep -E "^${device}p?3$")"
+wipefs "${part_boot}"
+wipefs "${part_swap}"
+wipefs "${part_root}"
 
 # Write the partitions and mount
+mkfs.vfat -F32 "${part_boot}"
+mkswap "${part_swap}"
+mkfs.f2fs -f "${part_root}"
+swapon "${part_swap}"
+mount "${part_root}" /mnt
+mkdir /mnt/boot
+mount "${part_boot}" /mnt/boot
 
 # Install important packages using pacstrap
 echo ' --- Installing Base --- '
