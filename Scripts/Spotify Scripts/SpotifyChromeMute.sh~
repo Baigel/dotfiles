@@ -3,7 +3,7 @@
 echo "Starting Chrome-Mute"
 echo $#
 
-if [[ $# -le 1 ]]; then
+if [[ $# -le 0 ]]; then
 	threshold=1
 	echo "Setting default threshold to $threshold"
 else
