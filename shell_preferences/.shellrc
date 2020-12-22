@@ -33,6 +33,7 @@ alias gnewtag='git tag -a'
 alias f="ranger"
 alias l="ls"
 alias m="man"
+alias t="termdown"
 # pacman and yay
 alias pacsyu='sudo pacman -Syyu'                 # update only standard pkgs
 alias yaysua="yay -Sua --noconfirm"              # update only AUR pkgs
