@@ -539,17 +539,29 @@ exec --no-startup-id $i3-wm.program.3
 exec_always --no-startup-id "feh --bg-fill ~/.wallpaper"
 
 # Custom xmodmap Key Mapping
-exec_always --no-startup-id "xmodmap ~/.xmodmaprc"
+exec_always "xmodmap ~/.xmodmaprc"
+bindsym $mod+shift+a exec "xmodmap ~/.xmodmaprc"
 
+# Custom Program Key Bindings
 bindsym $mod+a exec atom
+bindsym $mod+e exec evolution
+
+# Custom Media Bindings
+bindsym $mod+grave exec playerctl play-pause
 bindsym $mod+x exec playerctl next
 bindsym $mod+z exec playerctl previous
-bindsym $mod+grave exec playerctl play-pause
-bindsym $mod+$alt+grave exec bash ~/.scripts/GoBack10Songs.sh
-bindsym --release $alt+a exec --no-startup-id xdotool type "ahmedhafeezbaig@gmail.com"
 
-# Easier access to arrow keys
-bindsym --release Ctrl+j exec --no-startup-id xdotool key --clearmodifiers Left
-bindsym --release Ctrl+k exec --no-startup-id xdotool key --clearmodifiers Down
-bindsym --release Ctrl+l exec --no-startup-id xdotool key --clearmodifiers Up
-bindsym --release Ctrl+semicolon exec --no-startup-id xdotool key --clearmodifiers Right
+# Custom Utility Bindings
+bindsym $mod+shift+x exec "flameshot gui"
+bindsym --release $alt+a exec --no-startup-id xdotool type "ahmedhafeezbaig@gmail.com"
+bindsym $mod+$alt+grave exec bash ~/.scripts/GoBack10Songs.sh
+
+# Custom Navigation
+bindsym $mod+m move workspace to output left
+bindsym $mod+Tab focus left
+
+# Easier access to arrow keys (currently doesn't work; use xmodmap)
+#bindsym --release Ctrl+j exec --no-startup-id xdotool key --clearmodifiers Left
+#bindsym --release Ctrl+k exec --no-startup-id xdotool key --clearmodifiers Down
+#bindsym --release Ctrl+l exec --no-startup-id xdotool key --clearmodifiers Up
+#bindsym --release Ctrl+semicolon exec --no-startup-id xdotool key --clearmodifiers Right
