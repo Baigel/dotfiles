@@ -5,6 +5,9 @@
 ######### START MESSAGE ##########
 echo "~/.shellrc sourced"
 
+######### AUTOSTART #########
+xmodmap ~/.xmodmaprc
+feh --bg-scale ~/.wallpaper
 
 ########## ALIAS ##########
 # power management
