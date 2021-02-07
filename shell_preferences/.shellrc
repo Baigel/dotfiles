@@ -1,13 +1,9 @@
 # Tcl Script for all bash/zsh preferences
 # How to use: add 'source .shell_pref' to .profile or .zprofike
 
-
-######### START MESSAGE ##########
-echo "~/.shellrc sourced"
-
 ######### AUTOSTART #########
 xmodmap ~/.xmodmaprc
-feh --bg-scale ~/.wallpaper
+feh --bg-scale ~/.wallpaper 2>> /dev/null
 
 ########## ALIAS ##########
 # power management
@@ -34,7 +30,6 @@ alias gtag='git tag'
 alias gnewtag='git tag -a'
 # highly used terminal tools
 alias f="ranger"
-alias l="ls"
 alias m="man"
 alias t="termdown"
 # pacman and yay
@@ -53,6 +48,7 @@ alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
 # Changing "ls" to "exa"
+alias l='\ls'
 alias ls='exa -al --color=always --group-directories-first' # my preferred listing
 alias la='exa -a --color=always --group-directories-first'  # all files and dirs
 alias ll='exa -l --color=always --group-directories-first'  # long format
