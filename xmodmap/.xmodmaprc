@@ -6,4 +6,5 @@ keysym i = i I Home
 keysym o = o O End
 keysym 0x3b = 0x3b 0x3a Right
 keysym 0x20 = 0x20 0x20 Return
-keysym m = m M BackSpace
+keysym N = n N BackSpace
+keysym m = m M Delete
