@@ -8,4 +8,3 @@ keysym 0x3b = 0x3b 0x3a Right
 keysym 0x20 = 0x20 0x20 Return
 keysym N = n N BackSpace
 keysym m = m M Delete
-keysym Super_R = Super_L
