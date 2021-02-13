@@ -6,7 +6,7 @@ xmodmap ~/.xmodmaprc
 feh --bg-scale ~/.wallpaper 2>> /dev/null
 
 ######### Powerlevel10k #########
-source ~/.powerlevel10k/powerlevel10k.zsh-theme
+source ~/.Powerlevel10k/powerlevel10k.zsh-theme
 
 ########## ALIAS ##########
 # power management
