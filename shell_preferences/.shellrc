@@ -5,6 +5,9 @@
 xmodmap ~/.xmodmaprc
 feh --bg-scale ~/.wallpaper 2>> /dev/null
 
+######### Powerlevel10k #########
+source ~/.powerlevel10k/powerlevel10k.zsh-theme
+
 ########## ALIAS ##########
 # power management
 alias hibernate="systemctl hibernate"
@@ -69,7 +72,6 @@ alias mv='mv -i'
 alias rm='rm -i'
 # the terminal rickroll
 alias rr='curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash'
-
 
 ########## ARCHIVE EXTRACTION ##########
 # usage: ex <file>
