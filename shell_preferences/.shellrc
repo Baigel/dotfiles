@@ -9,7 +9,7 @@ feh --bg-scale ~/.wallpaper 2>> /dev/null
 export PATH=~/.emacs.d/bin:$PATH
 
 ######### Powerlevel10k #########
-source ~/.powerlevel10k/powerlevel10k.zsh-theme
+#[[ $- != *i* ]] || source ~/.powerlevel10k/powerlevel10k.zsh-theme
 
 ########## ALIAS ##########
 # power management
