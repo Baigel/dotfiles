@@ -8,9 +8,6 @@ feh --bg-scale ~/.wallpaper 2>> /dev/null
 ######### CUSTOM PATH LOCATIONS #########
 export PATH=~/.emacs.d/bin:$PATH
 
-######### Powerlevel10k #########
-#[[ $- != *i* ]] || source ~/.powerlevel10k/powerlevel10k.zsh-theme
-
 ########## ALIAS ##########
 # power management
 alias hibernate="systemctl hibernate"
