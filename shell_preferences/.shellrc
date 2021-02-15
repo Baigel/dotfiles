@@ -73,6 +73,13 @@ alias rm='rm -i'
 # the terminal rickroll
 alias rr='curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash'
 
+########## CUSTOM SHELL BINDINGS ##########
+bindkey "^[[H" beginning-of-line
+bindkey "^[[F" end-of-line
+bindkey "^[[3~" delete-char
+bindkey "^[[1;5C" forward-word
+bindkey "^[[1;5D" backward-word
+
 ########## ARCHIVE EXTRACTION ##########
 # usage: ex <file>
 ex ()
