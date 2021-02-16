@@ -2,7 +2,7 @@
 # baraction.sh for spectrwm status bar
 # From http://wiki.archlinux.org/index.php/Scrotwm
 
-SLEEP_SEC=3
+SLEEP_SEC=1
 #loops forever outputting a line every SLEEP_SEC secs
 while :; do
     # power output
@@ -17,13 +17,13 @@ while :; do
         if [ -n "$BAT" ]
             then
             # TO DO make % green to show charged/ing
-            POWER="${CHARGE}% Charging"
+            POWER="+${CHARGE}%"
         else                                                                                                                                         
             #is only on AC                                                                                                                       
             POWER="AC"                                                                                                                           
         fi
     else # hence is not on AC so is discharging battery
-        POWER="${CHARGE}% Discharging"
+        POWER="-${CHARGE}%"
         # if [ "$CHARGE -gt "20" ]
         # then
         # #TO DO make orange for > 20%
@@ -32,28 +32,28 @@ while :; do
         # #TO DO make red for < 20%# POWER="${CHARGE}%"
         # fi
     fi
-    POWER_STR="Battery: $POWER"
+    POWER_STR="Bat: $POWER"
     
     #spectrwm bar_print can't handle UTF-8 characters, such as degree symbol
     eval $(sensors 2>/dev/null | sed s/[?+]//g | awk '/^Core 0/ {printf "CORE0TEMP=%s;", $3}; /^Core 1/ {printf "CORE1TEMP=%s;",$3}; /^Core 2/ {printf "CORE2TEMP=%s;",$3}; /^Core 3/ {printf "CORE3TEMP=%s;",$3}; /^fan1/ {printf "FANSPD=%s;",$2};' -)
-    TEMP_STR="CPU Temperature = $CORE0TEMP, $CORE1TEMP, $CORE2TEMP, $CORE3TEMP"
+    TEMP_STR="CPU Temp: $CORE0TEMP, $CORE1TEMP, $CORE2TEMP, $CORE3TEMP"
     
     NETWORK=`nmcli | grep ' connected' | cut -d " " -f 4`
     [ -z "$NETWORK" ] && NETWORK="Disconnected"
-    NET_STR="Network: $NETWORK"
+    NET_STR="Net: $NETWORK"
     
-    CPUFREQ_STR=`echo "CPU Frequency: "$(cat /proc/cpuinfo | grep 'cpu MHz' | sed 's/.*: //g; s/\..*//g;' | awk '{ total += $1; count++ } END { print total/count }' | awk '{print int($1)}')`
+    CPUFREQ_STR=`echo "CPU (GHz): "$(cat /proc/cpuinfo | grep 'cpu MHz' | sed 's/.*: //g; s/\..*//g;' | awk '{ total += $1; count++ } END { print total/count }' | awk '{print int($1)/1000}')`
     
-    CPULOAD_STR="Load:$(uptime | sed 's/.*://; s/,//g')"
+    CPULOAD_STR="Load: $(uptime | sed 's/.*://; s/,//g')"
     
     eval $(awk '/^MemTotal/ {printf "MTOT=%s;", $2}; /^MemFree/ {printf "MFREE=%s;",$2}' /proc/meminfo)
     MUSED=$(( $MTOT - $MFREE ))
     MUSEDPT=$(( ($MUSED * 100) / $MTOT ))
-    MEM_STR="Mem:${MUSEDPT}%"
+    MEM_STR="Mem: ${MUSEDPT}%"
     
-    DATE_STR=$(date)
+    DATE_STR=$(date | cut -d " " -f 1-5)
     
-    echo -e "$DATE_STR  |  $POWER_STR  |  $TEMP_STR  |  $CPUFREQ_STR  |  $CPULOAD_STR  |  $MEM_STR  |  $NET_STR"
+    echo -e "$DATE_STR   |   $POWER_STR   |   $TEMP_STR   |   $CPUFREQ_STR   |   $CPULOAD_STR   |   $MEM_STR   |   $NET_STR"
     
     sleep $SLEEP_SEC
 done
