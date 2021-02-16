@@ -3,7 +3,7 @@
 # From http://wiki.archlinux.org/index.php/Scrotwm
 
 SLEEP_SEC=1
-#loops forever outputting a line every SLEEP_SEC secs
+
 while :; do
     # power output
     BAT=`acpi -b`
