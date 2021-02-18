@@ -52,8 +52,10 @@ while :; do
     MEM_STR="Mem: ${MUSEDPT}%"
     
     DATE_STR=$(date | cut -d " " -f 1-5)
+	
+	VOLUME=$(awk -F"[][]" '/Left:/ { print $2 }' <(amixer sget Master))
     
-    echo -e "$DATE_STR   |   $POWER_STR   |   $TEMP_STR   |   $CPUFREQ_STR   |   $CPULOAD_STR   |   $MEM_STR   |   $NET_STR"
+    echo -e "$DATE_STR   |   $POWER_STR   |   $TEMP_STR   |   $CPUFREQ_STR   |   $CPULOAD_STR   |   $MEM_STR   |   $VOLUME   |   $NET_STR"
     
     sleep $SLEEP_SEC
 done
