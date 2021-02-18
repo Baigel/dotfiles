@@ -44,8 +44,8 @@ while :; do
     
     CPUFREQ_STR=`echo "CPU (GHz): "$(cat /proc/cpuinfo | grep 'cpu MHz' | sed 's/.*: //g; s/\..*//g;' | awk '{ total += $1; count++ } END { print total/count }' | awk '{print int($1)/1000}')`
     
-    CPULOAD_STR="Load: $(uptime | sed 's/.*://; s/,//g')"
-    
+    CPULOAD_STR="Load: $(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1"%"}')"
+	
     eval $(awk '/^MemTotal/ {printf "MTOT=%s;", $2}; /^MemFree/ {printf "MFREE=%s;",$2}' /proc/meminfo)
     MUSED=$(( $MTOT - $MFREE ))
     MUSEDPT=$(( ($MUSED * 100) / $MTOT ))
@@ -53,9 +53,9 @@ while :; do
     
     DATE_STR=$(date | cut -d " " -f 1-5)
 	
-	VOLUME=$(awk -F"[][]" '/Left:/ { print $2 }' <(amixer sget Master))
-    
-    echo -e "$DATE_STR   |   $POWER_STR   |   $TEMP_STR   |   $CPUFREQ_STR   |   $CPULOAD_STR   |   $MEM_STR   |   $VOLUME   |   $NET_STR"
+	VOLUME="Vol: $(awk -F"[][]" '/Left:/ { print $2 }' <(amixer sget Master))"
+
+    echo -e "$DATE_STR  |  $POWER_STR  |  $TEMP_STR  |  $CPUFREQ_STR  |  $CPULOAD_STR  |  $MEM_STR  |  $VOLUME  |  $NET_STR"
     
     sleep $SLEEP_SEC
 done
