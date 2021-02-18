@@ -1,5 +1,6 @@
-# Tcl Script for all bash/zsh preferences
-# How to use: add 'source .shell_pref' to .profile or .zprofike
+#!/bin/bash
+
+######### BAIGEL'S SHELL PREFERENCES #########
 
 ######### AUTOSTART #########
 xmodmap ~/.xmodmaprc
