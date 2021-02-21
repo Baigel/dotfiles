@@ -1,5 +1,4 @@
 # Software AUR Programs and other community packages
-cat > /aur_install.sh <<- EOF
 cd ~
 mkdir -p aur-programs
 cd aur-programs
@@ -17,6 +16,3 @@ for i in "\${AURPrograms[@]}"
 done
 cd
 rm -rf ~/aur-programs
-EOF
-chmod +x /aur_install.sh
-su -s $SHELL -l $USERNAME -c "/aur_install.sh" 
