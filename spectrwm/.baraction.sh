@@ -1,101 +1,61 @@
-# #################### BAIGEL's SPECTRWM CUSTOM BARACTION ####################
- 
-# Bash commands that need to be run on startup
-feh --bg-scale ~/.wallpaper
-xmodmap .xmodmaprc
- 
- print_date() {
-     # The date is printed to the status bar by default.
-     # To print the date through this script, set clock_enabled to 0
-     # in spectrwm.conf.  Uncomment "print_date" below.
-     FORMAT="%a %b %d %R %Z %Y"
-     DATE=`date "+${FORMAT}"`
-     echo -n "${DATE}     "
- }
- 
- print_mem() {
-     MEM=`/usr/bin/top | grep Free: | cut -d " " -f6`
-     echo -n "Free mem: $MEM  "
- }
- 
- _print_cpu() {
-     printf "CPU: %3d%% User %3d%% Nice %3d%% Sys %3d%% Spin %3d%% Int %3d%% Idle  " $1 $2 $3 $4 $5 $6
- }
- 
- print_cpu() {
-     OUT=""
-     # iostat prints each column justified to 3 chars, so if one counter
-     # is 100, it jams up agains the preceeding one. sort this out.
-     while [ "${1}x" != "x" ]; do
-         if [ ${1} -gt 99 ]; then
-             OUT="$OUT ${1%100} 100"
-             else
-                 OUT="$OUT ${1}"
-                 fi
-                 shift;
-             done
-             _print_cpu $OUT
- }
- 
- print_cpuspeed() {
-     CPU_SPEED=`/sbin/sysctl hw.cpuspeed | cut -d "=" -f2`
-     printf "CPU speed: %4d MHz  " $CPU_SPEED
- }
- 
- print_bat() {
-     BAT_STATUS=$1
-     BAT_LEVEL=$2
-     AC_STATUS=$3
-     
-     if [ $AC_STATUS -ne 255 -o $BAT_STATUS -lt 4 ]; then
-         if [ $AC_STATUS -eq 0 ]; then
-             echo -n "on battery (${BAT_LEVEL}%)"
-             else
-                 case $AC_STATUS in
-                 1)
-                 AC_STRING="on AC: "
-                 ;;
-             2)
-             AC_STRING="on backup AC: "
-             ;;
-         *)
-         AC_STRING=""
-         ;;
-         esac;
-         case $BAT_STATUS in
-         4)
-         BAT_STRING="(no battery)"
-         ;;
-         [0-3])
-         BAT_STRING="(battery ${BAT_LEVEL}%)"
-         ;;
-         *)
-         BAT_STRING="(battery unknown)"
-         ;;
-         esac;
-         
-         FULL="${AC_STRING}${BAT_STRING}"
-         if [ "$FULL" != "" ]; then
-             echo -n "$FULL"
-             fi
-             fi
-             fi
- }
- 
- # cache the output of apm(8), no need to call that every second.
- APM_DATA=""
- I=0
- while :; do
-     IOSTAT_DATA=`/usr/sbin/iostat -C -c 2 | tail -n 1 | grep '[0-9]$'`
-     if [ $I -eq 0 ]; then
-         APM_DATA=`/usr/sbin/apm -alb`
-         fi
-         # print_date
-         print_mem
-         print_cpu $IOSTAT_DATA
-         print_cpuspeed
-         print_bat $APM_DATA
-         echo ""
-         I=$(( ( ${I} + 1 ) % 11 ))
-         sleep 1
+#!/bin/bash
+# baraction.sh for spectrwm status bar
+# From http://wiki.archlinux.org/index.php/Scrotwm
+
+SLEEP_SEC=1
+
+while :; do
+    # power output
+    BAT=`acpi -b`
+    CHARGE=`acpi -b | awk '{printf("%d", $4)}'`
+    AC=`acpi -a | awk '{printf("%s", $3)}'`
+    # if AC connected
+    if [ "$AC" = 'on-line' ]
+        then
+        #if battery connected and charging
+        # TO DO check
+        if [ -n "$BAT" ]
+            then
+            # TO DO make % green to show charged/ing
+            POWER="+${CHARGE}%"
+        else                                                                                                                                         
+            #is only on AC                                                                                                                       
+            POWER="AC"                                                                                                                           
+        fi
+    else # hence is not on AC so is discharging battery
+        POWER="-${CHARGE}%"
+        # if [ "$CHARGE -gt "20" ]
+        # then
+        # #TO DO make orange for > 20%
+        # POWER="${CHARGE}%"
+        # else
+        # #TO DO make red for < 20%# POWER="${CHARGE}%"
+        # fi
+    fi
+    POWER_STR="Bat: $POWER"
+    
+    #spectrwm bar_print can't handle UTF-8 characters, such as degree symbol
+    eval $(sensors 2>/dev/null | sed s/[?+]//g | awk '/^Core 0/ {printf "CORE0TEMP=%s;", $3}; /^Core 1/ {printf "CORE1TEMP=%s;",$3}; /^Core 2/ {printf "CORE2TEMP=%s;",$3}; /^Core 3/ {printf "CORE3TEMP=%s;",$3}; /^fan1/ {printf "FANSPD=%s;",$2};' -)
+    TEMP_STR="CPU Temp: $CORE0TEMP, $CORE1TEMP, $CORE2TEMP, $CORE3TEMP"
+    
+    NETWORK=`nmcli | grep ' connected' | cut -d " " -f 4`
+    [ -z "$NETWORK" ] && NETWORK="Disconnected"
+    NET_STR="Net: $NETWORK"
+    
+    CPUFREQ_STR=`echo "CPU (GHz): "$(cat /proc/cpuinfo | grep 'cpu MHz' | sed 's/.*: //g; s/\..*//g;' | awk '{ total += $1; count++ } END { print total/count }' | awk '{print int($1)/1000}')`
+    
+    CPULOAD_STR="Load: $(top -bn1 | grep "Cpu(s)" | sed "s/.*, *\([0-9.]*\)%* id.*/\1/" | awk '{print 100 - $1"%"}')"
+	
+    eval $(awk '/^MemTotal/ {printf "MTOT=%s;", $2}; /^MemFree/ {printf "MFREE=%s;",$2}' /proc/meminfo)
+    MUSED=$(( $MTOT - $MFREE ))
+    MUSEDPT=$(( ($MUSED * 100) / $MTOT ))
+    MEM_STR="Mem: ${MUSEDPT}%"
+    
+    DATE_STR=$(date | cut -d " " -f 1-5)
+	
+	VOLUME="Vol: $(awk -F"[][]" '/Left:/ { print $2 }' <(amixer sget Master))"
+
+    echo -e "$DATE_STR  |  $POWER_STR  |  $TEMP_STR  |  $CPUFREQ_STR  |  $CPULOAD_STR  |  $MEM_STR  |  $VOLUME  |  $NET_STR"
+    
+    sleep $SLEEP_SEC
 done
