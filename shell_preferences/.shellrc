@@ -20,7 +20,6 @@ alias .3='cd ../../..'
 alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
 # git
-alias gaddup='git add -u'
 alias gaddall='git add .'
 alias gbranch='git branch'
 alias gcheckout='git checkout'
@@ -32,6 +31,7 @@ alias gpush='git push origin'
 alias gstatus='git status'
 alias gtag='git tag'
 alias gnewtag='git tag -a'
+alias gacp='git add . && git commit -m "this is an automated commit message" && git push && git status'
 # highly used terminal tools
 alias f="ranger"
 alias m="man"
