@@ -55,7 +55,7 @@ while :; do
 	
 	VOLUME="Vol: $(awk -F"[][]" '/Left:/ { print $2 }' <(amixer sget Master))"
 
-    echo -e "$DATE_STR  |  $POWER_STR  |  $TEMP_STR  |  $CPUFREQ_STR  |  $CPULOAD_STR  |  $MEM_STR  |  $VOLUME  |  $NET_STR"
+    echo -e "$DATE_STR    |    $POWER_STR    |    $TEMP_STR    |    $CPUFREQ_STR    |    $CPULOAD_STR    |    $MEM_STR    |    $VOLUME    |    $NET_STR"
     
     sleep $SLEEP_SEC
 done
