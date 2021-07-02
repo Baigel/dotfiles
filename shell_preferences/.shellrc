@@ -19,6 +19,8 @@ alias ...='cd ../..'
 alias .3='cd ../../..'
 alias .4='cd ../../../..'
 alias .5='cd ../../../../..'
+# dir shortcuts
+alias notes='cd ~/Baigel-Git/Ahmeds-Notes'
 # git
 alias gaddall='git add .'
 alias gbranch='git branch'
