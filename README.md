@@ -7,4 +7,3 @@ Each folder contains the corresponding file that is needed for said distro/progr
 ## Other
 p.s. this repo is a bit of a mess and there is stuff very specific to me (deal with it)
 
-Wallpaper Credits: (Guillén Pérez) https://www.flickr.com/photos/mossaiq/32087480724/
