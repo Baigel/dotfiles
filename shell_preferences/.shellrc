@@ -11,7 +11,7 @@ export PATH=~/.emacs.d/bin:$PATH
 
 ########## ALIAS ##########
 # power management
-alias hibernate="systemctl hibernate"
+alias hibernate="systemctl hibernate; i3lock -i ~/.lockscreen_wallpaper"
 alias sleep="systemctl suspend"
 # navigation
 alias ..='cd ..'
