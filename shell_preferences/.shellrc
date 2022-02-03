@@ -3,50 +3,37 @@
 ######### BAIGEL'S SHELL PREFERENCES #########
 
 ######### AUTOSTART #########
-feh --bg-scale ~/.wallpaper 2>> /dev/null
+#feh --bg-scale ~/.wallpaper 2>> /dev/null
 
 ########## ALIAS ##########
-# power management
+# Power management
 alias hibernate="systemctl hibernate; i3lock -i ~/.lockscreen_wallpaper"
 alias sleep="systemctl suspend"
-# navigation
+# Navigation
 alias ..='cd ..'
 alias ...='cd ../..'
-alias .3='cd ../../..'
-alias .4='cd ../../../..'
-alias .5='cd ../../../../..'
-# dir shortcuts
-alias notes='cd ~/Baigel-Git/Ahmeds-Notes'
-# git
+# Git
 alias gaddall='git add .'
-alias gbranch='git branch'
-alias gcheckout='git checkout'
-alias gclone='git clone'
 alias gcommit='git commit -m'
-alias gfetch='git fetch'
 alias gpull='git pull origin'
 alias gpush='git push origin'
 alias gstatus='git status'
-alias gtag='git tag'
-alias gnewtag='git tag -a'
-alias gacp='git add . && git commit -m "this is an automated commit message" && git push && git status'
-alias gsync='~/Dropbox/Scripts/GitSync.sh'
+# Templates
+latex() { mkdir "$1" && cp ~/Dropbox/General/Templates/LaTeX\ Templates/LaTeX_Template.tex ./"$1"/"$1".tex}
+latexmk() { mkdir "$1" && cp ~/Dropbox/General/Templates/LaTeX\ Templates/LaTeX_Template.tex ./"$1"/"$1".tex
+			  cp ~/Dropbox/General/Templates/LaTeX\ Templates/Makefile ./"$1"/Makefile}
+# Scripts
+alias gsync='~/Dropbox/General/Scripts/GitSync.sh'
 # highly used terminal tools
 alias f="ranger"
 alias m="man"
-alias t="termdown"
-# pacman and yay
+# Pacman and yay
 alias pacsyu='sudo pacman -Syyu'                 # update only standard pkgs
 alias yaysua="yay -Sua --noconfirm"              # update only AUR pkgs
 alias yaysyu="yay -Syu --noconfirm"              # update standard pkgs and AUR pkgs
-alias unlock="sudo rm /var/lib/pacman/db.lck"    # remove pacman lock
-alias cleanup='sudo pacman -Rns $(pacman -Qtdq)' # remove orphaned packages
-# get fastest mirrors
-alias mirror="sudo reflector -f 30 -l 30 --number 10 --verbose --save /etc/pacman.d/mirrorlist"
-alias mirrord="sudo reflector --latest 50 --number 20 --sort delay --save /etc/pacman.d/mirrorlist"
-alias mirrors="sudo reflector --latest 50 --number 20 --sort score --save /etc/pacman.d/mirrorlist"
-alias mirrora="sudo reflector --latest 50 --number 20 --sort age --save /etc/pacman.d/mirrorlist"
-# Colorize grep output (good for log files)
+# Get fastest mirrors
+alias mirror="sudo reflector --latest 50 --number 20 --sort delay --save /etc/pacman.d/mirrorlist"
+# Grep
 alias grep='grep --color=auto'
 alias egrep='egrep --color=auto'
 alias fgrep='fgrep --color=auto'
@@ -54,24 +41,14 @@ alias fgrep='fgrep --color=auto'
 alias l='\ls'
 alias ls='exa -al --color=always --group-directories-first' # my preferred listing
 alias la='exa -a --color=always --group-directories-first'  # all files and dirs
-alias ll='exa -l --color=always --group-directories-first'  # long format
-alias lt='exa -aT --color=always --group-directories-first' # tree listing
-alias l.='exa -a | egrep "^\."'
-## get top process eating memory
-alias psmem='ps auxf | sort -nr -k 4'
-alias psmem10='ps auxf | sort -nr -k 4 | head -10'
-## get top process eating cpu ##
-alias pscpu='ps auxf | sort -nr -k 3'
-alias pscpu10='ps auxf | sort -nr -k 3 | head -10'
-# program specific
-alias tetris="nestopia ~/Documents/Tetris/tetris.nes"
-alias phone="adb connect 192.168.1.12:5555 && scrcpy"
-# confirm before overwriting something
+## Top processes eating memory
+alias psmem='ps auxf | sort -nr -k 4 | head -10'
+## Top processes eating cpu ##
+alias pscpu='ps auxf | sort -nr -k 3 | head -10'
+# Confirm before overwriting something
 alias cp="cp -i"
 alias mv='mv -i'
 alias rm='rm -i'
-# the terminal rickroll
-alias rr='curl -s -L https://raw.githubusercontent.com/keroserene/rickrollrc/master/roll.sh | bash'
 
 ########## CUSTOM SHELL BINDINGS ##########
 bindkey "^[[H" beginning-of-line
